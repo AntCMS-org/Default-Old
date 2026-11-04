@@ -1,0 +1,72 @@
+{% import "macros.html.twig" as macros %}
+
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ AntCMSDescription }}">
+  <meta name="author" content="{{ AntCMSAuthor }}">
+  <meta name="keywords" content="{{ AntCMSKeywords }}">
+  <meta name="generator" content="AntCMS">
+  
+  <link href="{{ "assets/build/antcms.css"|absUrl }}" rel="stylesheet">
+  <script src="{{ "assets/build/antcms.js"|absUrl }}" defer></script>
+
+  <title>{{ AntCMSTitle }}</title>
+</head>
+
+<body>
+  <div class="container" style="flex:1;">
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg mb-4">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="{{ ""|absUrl }}">{{ AntCMSSiteTitle}}</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ms-auto">
+                {{ macros.generateNav(pages) }}
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <!-- Content -->
+        {% if AntCMSAuthor is defined and themeConfig.showAuthor %}
+        <p>This content was written by {{ AntCMSAuthor }}</p>
+        {% endif %}
+        {% block body %}
+        {% endblock %}
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+  </div>
+
+  <footer class="text-lg-start">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      <p>Powered by <a href="https://antcms.org">AntCMS</a></p>
+      <!--AntCMS-Debug-->
+    </div>
+  </footer>
+
+  {% if themeConfig.enableNestedNav %}
+  <script>
+      // Allowing nested dropdowns to function correctly`
+      let dropdowns = document.querySelectorAll('.dropdown-toggle')
+      dropdowns.forEach((dd)=>{
+        dd.addEventListener('click', function (e) {
+          var el = this.nextElementSibling
+          el.style.display = el.style.display==='block'?'none':'block'
+        })
+      })
+    </script>
+  {% endif %}
+</body>
+</html>
